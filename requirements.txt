@@ -1,1 +1,6 @@
 streamlit==1.23.1
+matplotlib
+emoji
+scikit-learn
+wordcloud
+nltk
