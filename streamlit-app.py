@@ -3,12 +3,50 @@ import pandas as pd
 import pickle
 
 
-loaded_model = pickle.load(open('data/test-model.pkl', 'rb'))
+loaded_model = pickle.load(open('data/tf_idf_logreg_finetuned.pkl', 'rb'))
 loaded_decoder = pickle.load(open('data/decoder.pkl', 'rb'))
+
+
+def preprocess(text):
+    import re
+    import emoji
+
+    def replace_mentions(text: str) -> str:
+        return re.sub(r"@\w*", 'USER_TAG_PLACEHOLDER', text)
+
+    def replace_urls(text: str) -> str:
+        # sourced: https://urlregex.com/
+        return re.sub(r"http[s]?://(?:[a-zA-Z]|[0-9]|[$-_@.&+]|[!*\(\),]|(?:%[0-9a-fA-F][0-9a-fA-F]))+", 'LINK_PLACEHOLDER', text)
+
+    def replace_emotes(text: str) -> str:
+        text = re.sub(r"((?::|;|=)(?:-)?(?:\)|D|P|O|\\|/|\())", 'EMOTE_PLACEHOLDER', text)
+        text = emoji.demojize(text)
+        return text
+
+    def replace_dates(text: str) -> str:
+        return re.sub(r"\d{4}s?", 'DATE_PLACEHOLDER', text)
+
+    def replace_numerals(text: str) -> str:
+        return re.sub(r"\b\d[\d\.,/]*(st|th|rd|nd)?\b", 'NUMERAL_PLACEHOLDER', text)
+
+    def replace_repetitions(text: str) -> str:
+        return re.subre.sub(r"(.)\1{2,}", r"\1\1", text)
+
+    def lowercase(text: str) -> str:
+        return text.lower()
+
+    text = replace_mentions(text)
+    text = replace_urls(text)
+    text = replace_emotes(text)
+    text = replace_dates(text)
+    text = replace_numerals(text)
+    text = lowercase(text)
+    return text
 
 
 def update_result(text):
 
+    text = preprocess(text)
     result = loaded_model.predict([text])
     # st.write(loaded_decoder.classes_)
 
