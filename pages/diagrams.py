@@ -4,7 +4,7 @@ import re
 import emoji
 import sklearn
 
-st.title("Dataset overview and EDA")
+st.title("Training dataset overview")
 
 st.header("Load Dataset")
 df = pd.read_csv('data/cyberbullying_tweets.csv').rename(
