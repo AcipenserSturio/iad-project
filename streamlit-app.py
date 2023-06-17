@@ -4,8 +4,8 @@ import pickle
 
 
 loaded_model = pickle.load(open('data/tf_idf_logreg_finetuned.pkl', 'rb'))
+loaded_model_2 = pickle.load(open('data/cvec_lsvc_finetuned.pkl', 'rb'))
 loaded_decoder = pickle.load(open('data/decoder.pkl', 'rb'))
-
 
 def preprocess(text):
     import re
@@ -44,19 +44,6 @@ def preprocess(text):
     return text
 
 
-def update_result(text):
-
-    text = preprocess(text)
-    result = loaded_model.predict([text])
-    # st.write(loaded_decoder.classes_)
-
-    # st.write(result)
-    st.subheader("Predicted cyberbullying class:")
-    st.header(loaded_decoder.inverse_transform(result)[0])
-
-    # st.write(loaded_model.predict_log_proba(text))
-
-
 def on_change_source():
     st.write("huh")
 
@@ -65,9 +52,31 @@ st.title("Detect and classify cyberbullying")
 
 # X_test = ["Good morning, you lovely people <3"]
 
+model_choice = {
+    "LogReg + TF-IDF": loaded_model,
+    "SVEC": loaded_model_2,
+}
+
+option = st.selectbox(
+    "Model",
+    (
+        "LogReg + TF-IDF",
+        "SVEC",
+    )
+)
+
 form = st.form(key='main_form')
-source = form.text_input(label="Enter text to predict cyberbullying:")
+text = form.text_input(label="Enter text to predict cyberbullying:")
 submit_button = form.form_submit_button(label='Submit')
 
 if submit_button:
-    update_result(source)
+
+    text = preprocess(text)
+    result = model_choice[option].predict([text])
+    # st.write(loaded_decoder.classes_)
+
+    # st.write(result)
+    st.subheader("Predicted cyberbullying class:")
+    st.header(loaded_decoder.inverse_transform(result)[0])
+
+    # st.write(loaded_model.predict_log_proba(text))
