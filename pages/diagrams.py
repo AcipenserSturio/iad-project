@@ -67,11 +67,22 @@ st.pyplot(fig)
 st.caption("Mean length in tokens")
 st.write(round(sum(len(text.split()) for text in texts) / len(texts), 2))
 
+st.write("Мы видим большие значения на осях X графиков, что может свидетельствовать о наличии аномалий в датасете. Проверим самые длинные и короткие тексты в датасете.")
+
 st.header("Longest and Shortest texts")
+
+
 longest_text = max(texts, key=len)
-st.write(f'''Longest text: "{longest_text}",
-Symbols count:{len(longest_text)},
-Words count: {len(longest_text.split())}''')
+left_column, right_column = st.columns(2)
+with left_column:
+    st.subheader("Longest text")
+    st.write(longest_text)
+with right_column:
+    st.subheader("Symbols count")
+    st.write(len(longest_text))
+    st.subheader("Words count")
+    st.write(len(longest_text.split()))
+
 
 st.write(df[df['text'].str.contains("is feminazi an actual word with a denot")])
 
@@ -80,15 +91,36 @@ df = df.reset_index(drop=True)
 texts = df['text']
 st.write(texts.shape)
 
+st.write("""Видим наличие аномально большого текста. Судя по отсутствию контекстуальной связи между его частями, этот текст был ошибочно добавлен в датасет: либо из-за несовершенства парсера, обрабатывавшего собранные микросообщения, либо из-за возникшей во время парсинга ошибки. Это подтверждается также разделом "обсуждение" на сайте Kaggle, где и был выложен данный датасет -- там также пришли ко мнению о том, что это ошибка.
+
+Дальнейшее изучение текстов показало, что такой случай не единичный. В итоге нами было принято решение удалить такие тексты из датасета. Мы аргументируем наш выбор следующими доводами: во-первых, попытка разделить и разметить проблемные тексты отняла бы много времени, поскольку такой случай не единичный, и в итоге текстов, которые должны быть размечены в отдельности, набирается довольно много. Кроме того, у нас нет возможности проверить правильность возможной разметки, таким образом, неправильная разметка может сказаться на качестве работы модели. В случае же, если бы мы просто разделили эти тексты и добавили в датасет неразмеченными, от них было бы мало смысла, так как их нельзя было бы использовать ни в обучении, ни в валидации модели по причине отсутствия разметки.
+
+Для удаления больших текстов мы решили опираться на паттерн, а не длину сообщений, поскольку на неё влияют добавленные в сообщение ссылки, смайлики и проч., увеличивающие реальную длину сообщения в символах. Мы выявили, что ошибочные тексты содержат сочетание символов \\r\\n и удалили все тексты, содержащие данное сочетание символов.
+""")
+
 longest_text = max(texts, key=len)
-st.write(f'''Longest text: "{longest_text}",
-Symbols count:{len(longest_text)},
-Words count: {len(longest_text.split())}''')
+left_column, right_column = st.columns(2)
+with left_column:
+    st.subheader("Longest text (corrected)")
+    st.write(longest_text)
+with right_column:
+    st.subheader("Symbols count")
+    st.write(len(longest_text))
+    st.subheader("Words count")
+    st.write(len(longest_text.split()))
+
+st.header("Shortest text")
 
 shortest_text = min(texts, key=len)
-st.write(f'''Shortest text: "{shortest_text}",
-Symbols count:{len(shortest_text)},
-Words count: {len(shortest_text.split())}''')
+left_column, right_column = st.columns(2)
+with left_column:
+    st.subheader("Longest text")
+    st.write(shortest_text)
+with right_column:
+    st.subheader("Symbols count")
+    st.write(len(shortest_text))
+    st.subheader("Words count")
+    st.write(len(shortest_text.split()))
 
 labels_quant = df['label'].value_counts()
 labels_percent = [f'{round(_, 3) * 100}%' for _ in df['label'].value_counts(normalize=True)]
