@@ -54,14 +54,14 @@ st.title("Detect and classify cyberbullying")
 
 model_choice = {
     "LogReg + TF-IDF": loaded_model,
-    "LSVC": loaded_model_2,
+    "LinearSVC": loaded_model_2,
 }
 
 option = st.selectbox(
     "Model",
     (
         "LogReg + TF-IDF",
-        "LSVC",
+        "LinearSVC",
     )
 )
 
