@@ -18,3 +18,6 @@ One can run a streamlit application with `run.bat` file (on Windows) or using a 
 
 
 For models fitting we used [the following dataset](https://www.kaggle.com/datasets/andrewmvd/cyberbullying-classification)
+
+Created by [Karina Zakirova](https://github.com/KarinaZakirova), [Vyatcheslav Sviridov](https://github.com/VSvir), [Maxim Shestakov](https://github.com/AcipenserSturio), [Anastasia Matushchak](https://github.com/almatuschak).
+<img src="./2222.png">
