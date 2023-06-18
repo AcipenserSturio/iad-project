@@ -4,7 +4,7 @@
 ### A study project made as a part of our Data Mining and Elements of Machine Learning course
 
 <div align="center">
-<img src="./icon.png">
+<img src="./2222.png">
 </div>
 
 ## This project features:
@@ -18,3 +18,5 @@ One can run a streamlit application with `run.bat` file (on Windows) or using a 
 
 
 For models fitting we used [the following dataset](https://www.kaggle.com/datasets/andrewmvd/cyberbullying-classification)
+
+Created by Karina Zakirova, Vyatcheslav Sviridov, Maxim Shestakov, Anastasia Matushchak.
