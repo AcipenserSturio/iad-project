@@ -1,8 +1,18 @@
-import streamlit as st
-import pandas as pd
 import pickle
 import re
+
 import emoji
+import nltk
+import pandas as pd
+import streamlit as st
+from nltk.stem import WordNetLemmatizer
+
+
+@st.cache_data
+def load_nltk_packs():
+    nltk.download('punkt')
+    nltk.download('wordnet')
+    nltk.download('omw-1.4')
 
 
 # loaded_model = pickle.load(open('data/tf_idf_logreg_finetuned.pkl', 'rb'))
@@ -10,6 +20,7 @@ import emoji
 loaded_model_new = pickle.load(open('data/tf_idf_logreg_finetuned_new.pkl', 'rb'))
 loaded_model_2_new = pickle.load(open('data/cvec_lsvc_finetuned_new.pkl', 'rb'))
 loaded_decoder = pickle.load(open('data/decoder.pkl', 'rb'))
+load_nltk_packs()
 
 
 def preprocess(text):
@@ -34,6 +45,10 @@ def preprocess(text):
     def replace_repetitions(text: str) -> str:
         return re.subre.sub(r"(.)\1{2,}", r"\1\1", text)
 
+    def lemmatize(text: str) -> str:
+        lemmatizer = WordNetLemmatizer()
+        return " ".join([lemmatizer.lemmatize(token) for token in re.findall(r"\w*", text)])
+
     def lowercase(text: str) -> str:
         return text.lower()
 
@@ -42,6 +57,7 @@ def preprocess(text):
     text = replace_emotes(text)
     text = replace_dates(text)
     text = replace_numerals(text)
+    text = lemmatize(text)
     text = lowercase(text)
     return text
 

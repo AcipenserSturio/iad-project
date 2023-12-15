@@ -217,6 +217,7 @@ def get_corpus(data):
 # Получение облака слов
 
 
+@st.cache_data
 def get_wordCloud(corpus):
     wordCloud = WordCloud(background_color='black',
                           width=3000,
