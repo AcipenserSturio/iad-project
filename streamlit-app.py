@@ -1,16 +1,18 @@
 import streamlit as st
 import pandas as pd
 import pickle
+import re
+import emoji
 
 
-loaded_model = pickle.load(open('data/tf_idf_logreg_finetuned.pkl', 'rb'))
-loaded_model_2 = pickle.load(open('data/cvec_lsvc_finetuned.pkl', 'rb'))
+# loaded_model = pickle.load(open('data/tf_idf_logreg_finetuned.pkl', 'rb'))
+# loaded_model_2 = pickle.load(open('data/cvec_lsvc_finetuned.pkl', 'rb'))
+loaded_model_new = pickle.load(open('data/tf_idf_logreg_finetuned_new.pkl', 'rb'))
+loaded_model_2_new = pickle.load(open('data/cvec_lsvc_finetuned_new.pkl', 'rb'))
 loaded_decoder = pickle.load(open('data/decoder.pkl', 'rb'))
 
-def preprocess(text):
-    import re
-    import emoji
 
+def preprocess(text):
     def replace_mentions(text: str) -> str:
         return re.sub(r"@\w*", 'USER_TAG_PLACEHOLDER', text)
 
@@ -53,15 +55,19 @@ st.title("Detect and classify cyberbullying")
 # X_test = ["Good morning, you lovely people <3"]
 
 model_choice = {
-    "LogReg + TF-IDF": loaded_model,
-    "LinearSVC": loaded_model_2,
+    # "LogReg + TF-IDF": loaded_model,
+    # "LinearSVC + CVec": loaded_model_2,
+    "[NEW] LogReg + TF-IDF": loaded_model_new,
+    "[NEW] LinearSVC + CVec": loaded_model_2_new
 }
 
 option = st.selectbox(
     "Model",
     (
-        "LogReg + TF-IDF",
-        "LinearSVC",
+        # "LogReg + TF-IDF",
+        # "LinearSVC + CVec",
+        "[NEW] LogReg + TF-IDF",
+        "[NEW] LinearSVC + CVec"
     )
 )
 

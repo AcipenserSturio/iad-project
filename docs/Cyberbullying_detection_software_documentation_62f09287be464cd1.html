@@ -1,0 +1,696 @@
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"/><title>Cyberbullying detection software documentation</title><style>
+/* cspell:disable-file */
+/* webkit printing magic: print all background colors */
+html {
+	-webkit-print-color-adjust: exact;
+}
+* {
+	box-sizing: border-box;
+	-webkit-print-color-adjust: exact;
+}
+
+html,
+body {
+	margin: 0;
+	padding: 0;
+}
+@media only screen {
+	body {
+		margin: 2em auto;
+		max-width: 900px;
+		color: rgb(55, 53, 47);
+	}
+}
+
+body {
+	line-height: 1.5;
+	white-space: pre-wrap;
+}
+
+a,
+a.visited {
+	color: inherit;
+	text-decoration: underline;
+}
+
+.pdf-relative-link-path {
+	font-size: 80%;
+	color: #444;
+}
+
+h1,
+h2,
+h3 {
+	letter-spacing: -0.01em;
+	line-height: 1.2;
+	font-weight: 600;
+	margin-bottom: 0;
+}
+
+.page-title {
+	font-size: 2.5rem;
+	font-weight: 700;
+	margin-top: 0;
+	margin-bottom: 0.75em;
+}
+
+h1 {
+	font-size: 1.875rem;
+	margin-top: 1.875rem;
+}
+
+h2 {
+	font-size: 1.5rem;
+	margin-top: 1.5rem;
+}
+
+h3 {
+	font-size: 1.25rem;
+	margin-top: 1.25rem;
+}
+
+.source {
+	border: 1px solid #ddd;
+	border-radius: 3px;
+	padding: 1.5em;
+	word-break: break-all;
+}
+
+.callout {
+	border-radius: 3px;
+	padding: 1rem;
+}
+
+figure {
+	margin: 1.25em 0;
+	page-break-inside: avoid;
+}
+
+figcaption {
+	opacity: 0.5;
+	font-size: 85%;
+	margin-top: 0.5em;
+}
+
+mark {
+	background-color: transparent;
+}
+
+.indented {
+	padding-left: 1.5em;
+}
+
+hr {
+	background: transparent;
+	display: block;
+	width: 100%;
+	height: 1px;
+	visibility: visible;
+	border: none;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.09);
+}
+
+img {
+	max-width: 100%;
+}
+
+@media only print {
+	img {
+		max-height: 100vh;
+		object-fit: contain;
+	}
+}
+
+@page {
+	margin: 1in;
+}
+
+.collection-content {
+	font-size: 0.875rem;
+}
+
+.column-list {
+	display: flex;
+	justify-content: space-between;
+}
+
+.column {
+	padding: 0 1em;
+}
+
+.column:first-child {
+	padding-left: 0;
+}
+
+.column:last-child {
+	padding-right: 0;
+}
+
+.table_of_contents-item {
+	display: block;
+	font-size: 0.875rem;
+	line-height: 1.3;
+	padding: 0.125rem;
+}
+
+.table_of_contents-indent-1 {
+	margin-left: 1.5rem;
+}
+
+.table_of_contents-indent-2 {
+	margin-left: 3rem;
+}
+
+.table_of_contents-indent-3 {
+	margin-left: 4.5rem;
+}
+
+.table_of_contents-link {
+	text-decoration: none;
+	opacity: 0.7;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.18);
+}
+
+table,
+th,
+td {
+	border: 1px solid rgba(55, 53, 47, 0.09);
+	border-collapse: collapse;
+}
+
+table {
+	border-left: none;
+	border-right: none;
+}
+
+th,
+td {
+	font-weight: normal;
+	padding: 0.25em 0.5em;
+	line-height: 1.5;
+	min-height: 1.5em;
+	text-align: left;
+}
+
+th {
+	color: rgba(55, 53, 47, 0.6);
+}
+
+ol,
+ul {
+	margin: 0;
+	margin-block-start: 0.6em;
+	margin-block-end: 0.6em;
+}
+
+li > ol:first-child,
+li > ul:first-child {
+	margin-block-start: 0.6em;
+}
+
+ul > li {
+	list-style: disc;
+}
+
+ul.to-do-list {
+	padding-inline-start: 0;
+}
+
+ul.to-do-list > li {
+	list-style: none;
+}
+
+.to-do-children-checked {
+	text-decoration: line-through;
+	opacity: 0.375;
+}
+
+ul.toggle > li {
+	list-style: none;
+}
+
+ul {
+	padding-inline-start: 1.7em;
+}
+
+ul > li {
+	padding-left: 0.1em;
+}
+
+ol {
+	padding-inline-start: 1.6em;
+}
+
+ol > li {
+	padding-left: 0.2em;
+}
+
+.mono ol {
+	padding-inline-start: 2em;
+}
+
+.mono ol > li {
+	text-indent: -0.4em;
+}
+
+.toggle {
+	padding-inline-start: 0em;
+	list-style-type: none;
+}
+
+/* Indent toggle children */
+.toggle > li > details {
+	padding-left: 1.7em;
+}
+
+.toggle > li > details > summary {
+	margin-left: -1.1em;
+}
+
+.selected-value {
+	display: inline-block;
+	padding: 0 0.5em;
+	background: rgba(206, 205, 202, 0.5);
+	border-radius: 3px;
+	margin-right: 0.5em;
+	margin-top: 0.3em;
+	margin-bottom: 0.3em;
+	white-space: nowrap;
+}
+
+.collection-title {
+	display: inline-block;
+	margin-right: 1em;
+}
+
+.page-description {
+    margin-bottom: 2em;
+}
+
+.simple-table {
+	margin-top: 1em;
+	font-size: 0.875rem;
+	empty-cells: show;
+}
+.simple-table td {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table th {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table-header-color {
+	background: rgb(247, 246, 243);
+	color: black;
+}
+.simple-table-header {
+	font-weight: 500;
+}
+
+time {
+	opacity: 0.5;
+}
+
+.icon {
+	display: inline-block;
+	max-width: 1.2em;
+	max-height: 1.2em;
+	text-decoration: none;
+	vertical-align: text-bottom;
+	margin-right: 0.5em;
+}
+
+img.icon {
+	border-radius: 3px;
+}
+
+.user-icon {
+	width: 1.5em;
+	height: 1.5em;
+	border-radius: 100%;
+	margin-right: 0.5rem;
+}
+
+.user-icon-inner {
+	font-size: 0.8em;
+}
+
+.text-icon {
+	border: 1px solid #000;
+	text-align: center;
+}
+
+.page-cover-image {
+	display: block;
+	object-fit: cover;
+	width: 100%;
+	max-height: 30vh;
+}
+
+.page-header-icon {
+	font-size: 3rem;
+	margin-bottom: 1rem;
+}
+
+.page-header-icon-with-cover {
+	margin-top: -0.72em;
+	margin-left: 0.07em;
+}
+
+.page-header-icon img {
+	border-radius: 3px;
+}
+
+.link-to-page {
+	margin: 1em 0;
+	padding: 0;
+	border: none;
+	font-weight: 500;
+}
+
+p > .user {
+	opacity: 0.5;
+}
+
+td > .user,
+td > time {
+	white-space: nowrap;
+}
+
+input[type="checkbox"] {
+	transform: scale(1.5);
+	margin-right: 0.6em;
+	vertical-align: middle;
+}
+
+p {
+	margin-top: 0.5em;
+	margin-bottom: 0.5em;
+}
+
+.image {
+	border: none;
+	margin: 1.5em 0;
+	padding: 0;
+	border-radius: 0;
+	text-align: center;
+}
+
+.code,
+code {
+	background: rgba(135, 131, 120, 0.15);
+	border-radius: 3px;
+	padding: 0.2em 0.4em;
+	border-radius: 3px;
+	font-size: 85%;
+	tab-size: 2;
+}
+
+code {
+	color: #eb5757;
+}
+
+.code {
+	padding: 1.5em 1em;
+}
+
+.code-wrap {
+	white-space: pre-wrap;
+	word-break: break-all;
+}
+
+.code > code {
+	background: none;
+	padding: 0;
+	font-size: 100%;
+	color: inherit;
+}
+
+blockquote {
+	font-size: 1.25em;
+	margin: 1em 0;
+	padding-left: 1em;
+	border-left: 3px solid rgb(55, 53, 47);
+}
+
+.bookmark {
+	text-decoration: none;
+	max-height: 8em;
+	padding: 0;
+	display: flex;
+	width: 100%;
+	align-items: stretch;
+}
+
+.bookmark-title {
+	font-size: 0.85em;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	height: 1.75em;
+	white-space: nowrap;
+}
+
+.bookmark-text {
+	display: flex;
+	flex-direction: column;
+}
+
+.bookmark-info {
+	flex: 4 1 180px;
+	padding: 12px 14px 14px;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+}
+
+.bookmark-image {
+	width: 33%;
+	flex: 1 1 180px;
+	display: block;
+	position: relative;
+	object-fit: cover;
+	border-radius: 1px;
+}
+
+.bookmark-description {
+	color: rgba(55, 53, 47, 0.6);
+	font-size: 0.75em;
+	overflow: hidden;
+	max-height: 4.5em;
+	word-break: break-word;
+}
+
+.bookmark-href {
+	font-size: 0.75em;
+	margin-top: 0.25em;
+}
+
+.sans { font-family: ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol"; }
+.code { font-family: "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace; }
+.serif { font-family: Lyon-Text, Georgia, ui-serif, serif; }
+.mono { font-family: iawriter-mono, Nitti, Menlo, Courier, monospace; }
+.pdf .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK JP'; }
+.pdf:lang(zh-CN) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK SC'; }
+.pdf:lang(zh-TW) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK TC'; }
+.pdf:lang(ko-KR) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK KR'; }
+.pdf .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.pdf .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK JP'; }
+.pdf:lang(zh-CN) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK SC'; }
+.pdf:lang(zh-TW) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK TC'; }
+.pdf:lang(ko-KR) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK KR'; }
+.pdf .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.highlight-default {
+	color: rgba(55, 53, 47, 1);
+}
+.highlight-gray {
+	color: rgba(120, 119, 116, 1);
+	fill: rgba(120, 119, 116, 1);
+}
+.highlight-brown {
+	color: rgba(159, 107, 83, 1);
+	fill: rgba(159, 107, 83, 1);
+}
+.highlight-orange {
+	color: rgba(217, 115, 13, 1);
+	fill: rgba(217, 115, 13, 1);
+}
+.highlight-yellow {
+	color: rgba(203, 145, 47, 1);
+	fill: rgba(203, 145, 47, 1);
+}
+.highlight-teal {
+	color: rgba(68, 131, 97, 1);
+	fill: rgba(68, 131, 97, 1);
+}
+.highlight-blue {
+	color: rgba(51, 126, 169, 1);
+	fill: rgba(51, 126, 169, 1);
+}
+.highlight-purple {
+	color: rgba(144, 101, 176, 1);
+	fill: rgba(144, 101, 176, 1);
+}
+.highlight-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.highlight-red {
+	color: rgba(212, 76, 71, 1);
+	fill: rgba(212, 76, 71, 1);
+}
+.highlight-gray_background {
+	background: rgba(241, 241, 239, 1);
+}
+.highlight-brown_background {
+	background: rgba(244, 238, 238, 1);
+}
+.highlight-orange_background {
+	background: rgba(251, 236, 221, 1);
+}
+.highlight-yellow_background {
+	background: rgba(251, 243, 219, 1);
+}
+.highlight-teal_background {
+	background: rgba(237, 243, 236, 1);
+}
+.highlight-blue_background {
+	background: rgba(231, 243, 248, 1);
+}
+.highlight-purple_background {
+	background: rgba(244, 240, 247, 0.8);
+}
+.highlight-pink_background {
+	background: rgba(249, 238, 243, 0.8);
+}
+.highlight-red_background {
+	background: rgba(253, 235, 236, 1);
+}
+.block-color-default {
+	color: inherit;
+	fill: inherit;
+}
+.block-color-gray {
+	color: rgba(120, 119, 116, 1);
+	fill: rgba(120, 119, 116, 1);
+}
+.block-color-brown {
+	color: rgba(159, 107, 83, 1);
+	fill: rgba(159, 107, 83, 1);
+}
+.block-color-orange {
+	color: rgba(217, 115, 13, 1);
+	fill: rgba(217, 115, 13, 1);
+}
+.block-color-yellow {
+	color: rgba(203, 145, 47, 1);
+	fill: rgba(203, 145, 47, 1);
+}
+.block-color-teal {
+	color: rgba(68, 131, 97, 1);
+	fill: rgba(68, 131, 97, 1);
+}
+.block-color-blue {
+	color: rgba(51, 126, 169, 1);
+	fill: rgba(51, 126, 169, 1);
+}
+.block-color-purple {
+	color: rgba(144, 101, 176, 1);
+	fill: rgba(144, 101, 176, 1);
+}
+.block-color-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.block-color-red {
+	color: rgba(212, 76, 71, 1);
+	fill: rgba(212, 76, 71, 1);
+}
+.block-color-gray_background {
+	background: rgba(241, 241, 239, 1);
+}
+.block-color-brown_background {
+	background: rgba(244, 238, 238, 1);
+}
+.block-color-orange_background {
+	background: rgba(251, 236, 221, 1);
+}
+.block-color-yellow_background {
+	background: rgba(251, 243, 219, 1);
+}
+.block-color-teal_background {
+	background: rgba(237, 243, 236, 1);
+}
+.block-color-blue_background {
+	background: rgba(231, 243, 248, 1);
+}
+.block-color-purple_background {
+	background: rgba(244, 240, 247, 0.8);
+}
+.block-color-pink_background {
+	background: rgba(249, 238, 243, 0.8);
+}
+.block-color-red_background {
+	background: rgba(253, 235, 236, 1);
+}
+.select-value-color-uiBlue { background-color: rgba(35, 131, 226, .07); }
+.select-value-color-pink { background-color: rgba(245, 224, 233, 1); }
+.select-value-color-purple { background-color: rgba(232, 222, 238, 1); }
+.select-value-color-green { background-color: rgba(219, 237, 219, 1); }
+.select-value-color-gray { background-color: rgba(227, 226, 224, 1); }
+.select-value-color-translucentGray { background-color: rgba(255, 255, 255, 0.0375); }
+.select-value-color-orange { background-color: rgba(250, 222, 201, 1); }
+.select-value-color-brown { background-color: rgba(238, 224, 218, 1); }
+.select-value-color-red { background-color: rgba(255, 226, 221, 1); }
+.select-value-color-yellow { background-color: rgba(253, 236, 200, 1); }
+.select-value-color-blue { background-color: rgba(211, 229, 239, 1); }
+.select-value-color-pageGlass { background-color: undefined; }
+.select-value-color-washGlass { background-color: undefined; }
+
+.checkbox {
+	display: inline-flex;
+	vertical-align: text-bottom;
+	width: 16;
+	height: 16;
+	background-size: 16px;
+	margin-left: 2px;
+	margin-right: 5px;
+}
+
+.checkbox-on {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20width%3D%2216%22%20height%3D%2216%22%20fill%3D%22%2358A9D7%22%2F%3E%0A%3Cpath%20d%3D%22M6.71429%2012.2852L14%204.9995L12.7143%203.71436L6.71429%209.71378L3.28571%206.2831L2%207.57092L6.71429%2012.2852Z%22%20fill%3D%22white%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+
+.checkbox-off {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20x%3D%220.75%22%20y%3D%220.75%22%20width%3D%2214.5%22%20height%3D%2214.5%22%20fill%3D%22white%22%20stroke%3D%22%2336352F%22%20stroke-width%3D%221.5%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+	
+</style></head><body><article id="62f09287-be46-4cd1-9165-df0275839eb3" class="page sans"><header><h1 class="page-title">Cyberbullying detection software documentation</h1><p class="page-description"></p></header><div class="page-body"><nav id="de1321bc-7496-4896-b04f-964a2eaf1065" class="block-color-gray table_of_contents"><div class="table_of_contents-item table_of_contents-indent-0"><a class="table_of_contents-link" href="#b34d532a-af23-4617-ae08-6c951eee34b3"><strong>This project features:</strong></a></div><div class="table_of_contents-item table_of_contents-indent-0"><a class="table_of_contents-link" href="#1575376d-5c57-445d-b992-3cf90d41e36e">Описание проекта:</a></div><div class="table_of_contents-item table_of_contents-indent-0"><a class="table_of_contents-link" href="#83515044-6df6-42aa-854d-869d8f9be3ba">Download and use</a></div><div class="table_of_contents-item table_of_contents-indent-0"><a class="table_of_contents-link" href="#c75b2d6c-21f3-4b79-b8d1-efa86a3884af">Установка и использование</a></div><div class="table_of_contents-item table_of_contents-indent-0"><a class="table_of_contents-link" href="#c554989b-850c-4089-be15-3e2af1963b63"><mark class="highlight-gray_background">Statement of Work in Russian (ТЗ ГОСТ-19)</mark></a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#fadf1659-58d1-4f68-80e7-96e3c0ba8184"><mark class="highlight-gray_background"><strong>1. Введение;</strong></mark></a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#b125f567-9341-4300-8ce8-c39646346a3d"><mark class="highlight-gray_background"><strong>2. Основания для разработки;</strong></mark></a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#1ca2a937-4433-4b85-913f-a8065467c532"><mark class="highlight-gray_background"><strong>3. Назначение разработки;</strong></mark></a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#fd43ebaf-a793-4bfa-a144-2b484c6caae3"><mark class="highlight-gray_background"><strong>4. Требования к программе;</strong></mark></a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#dbf67947-835b-4263-abd7-3d07caf52d70"><mark class="highlight-gray_background"><strong>5. Требования к программной документации;</strong></mark></a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#b3b0e723-aafe-4566-9374-3c0b348ba065"><mark class="highlight-gray_background"><strong>6. Технико-экономические показатели;</strong></mark></a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#994eb75d-3042-41da-bcec-936caf4d04e0"><mark class="highlight-gray_background"><strong>7. Стадии и этапы разработки;</strong></mark></a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#4b2b0c75-d6fb-44aa-a7b5-f125d3a266f0"><mark class="highlight-gray_background"><strong>8. Порядок контроля и приемки.</strong></mark></a></div><div class="table_of_contents-item table_of_contents-indent-0"><a class="table_of_contents-link" href="#acbc1e0e-2c92-4eab-8787-fe60f0ef6602"><mark class="highlight-gray_background">Statement of Work in English</mark></a></div><div class="table_of_contents-item table_of_contents-indent-0"><a class="table_of_contents-link" href="#1358cb70-6d67-4c8d-b13e-cb65d56c0b46">ML-model fitting</a></div><div class="table_of_contents-item table_of_contents-indent-0"><a class="table_of_contents-link" href="#ead1494d-cfbd-4829-853f-13ddd3ffc2ce">Обучение модели</a></div><div class="table_of_contents-item table_of_contents-indent-0"><a class="table_of_contents-link" href="#b210312c-9152-4312-9a9d-68c488c150d6">Project files</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#caff91aa-ee22-42e0-8dd9-8be9338bc76a">data</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#c824371c-ebb5-455d-aafb-83ac8197dfd3">pages</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#8781f171-b7c0-4265-b6fc-556e92a31a0d">.gitignore</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#a88762bb-8930-4d54-8bb1-b6dbb8da9d4b">LICENSE</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#952827c7-c126-4009-98a8-8642f10ea967">Presentation.pdf</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#b78e23b2-34d8-4b85-88f7-19af6bbc5ca7">README.md</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#6bd2c9a2-1b2b-4d8b-b366-e7408a01404f">Datasets_concatenation.ipynb</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#9359e416-1857-45f8-bf85-b081abbea6d7">Cyberbullying_detection_models.ipynb</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#6369b439-8c21-4008-bbfd-1cad563f08a3">requirements.txt</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#6a4a3ca2-b732-4a3c-9fcf-5e9aa9153977">run.bat</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#52c2ad45-8f84-4860-8054-2e04caaa9092">streamlit-app.py</a></div></nav><h1 id="b34d532a-af23-4617-ae08-6c951eee34b3" class=""><strong>This project features:</strong></h1><ul id="188e89a5-40ec-44ad-b28d-bc636664385f" class="bulleted-list"><li style="list-style-type:disc">A jupiter notebook with all the ML models fitting process (Comments are in Russian).</li></ul><ul id="521e5dfa-2809-487f-a887-7b31a13225b6" class="bulleted-list"><li style="list-style-type:disc">A simple streamlit app with EDA step and an access to fitted models.</li></ul><ul id="bc1044e1-3f12-441e-9dcd-b9787eed5789" class="bulleted-list"><li style="list-style-type:disc">A presentation for our project (in Russian).</li></ul><p id="cc89ecb0-9276-405c-82c9-20845c3a30be" class="">For model fitting we united two of the following datasets: <a href="https://www.kaggle.com/datasets/andrewmvd/cyberbullying-classification">Cyberbullying Classification</a> and <a href="https://www.kaggle.com/datasets/saurabhshahane/cyberbullying-dataset?select=youtube_parsed_dataset.csv">Cyberbullying Dataset</a>.</p><p id="95f4b5e1-9f7c-4be6-bf18-517884a88893" class="">Created by <a href="https://github.com/KarinaZakirova">Karina Zakirova</a>, <a href="https://github.com/VSvir">Vyatcheslav Sviridov</a>, <a href="https://github.com/AcipenserSturio">Maxim Shestakov</a>, <a href="https://github.com/almatuschak">Anastasia Matushchak</a>, <a href="https://github.com/AlekseiBogdan">Alexei Bogdan</a>.</p><p id="0bcc6fb8-7cee-4f80-8bf2-67df42e0b78b" class="">View code on GitHub <a href="https://github.com/AcipenserSturio/iad-project/tree/main">here</a>.</p><h1 id="1575376d-5c57-445d-b992-3cf90d41e36e" class="">Описание проекта:</h1><ul id="607d8b1d-10b7-4a6b-919e-485983ba70cf" class="bulleted-list"><li style="list-style-type:disc">Jupiter notebook файл с тренировкой модели машинного обучения.</li></ul><ul id="42781b40-a3f8-460f-a066-d3d3b94d3533" class="bulleted-list"><li style="list-style-type:disc">Приложение на основе streamlit с описанием EDA датасета и доступом к обученным моделям.</li></ul><ul id="1f8109e3-e899-463d-9c02-a7c42f75d0d8" class="bulleted-list"><li style="list-style-type:disc">Презентация проекта.</li></ul><p id="2bbdc673-1a7d-489b-93fe-901b2ccbdb8f" class="">Для обучения модели использовались два датасета, объединенные нами в один:  <a href="https://www.kaggle.com/datasets/andrewmvd/cyberbullying-classification">Cyberbullying Classification</a> и <a href="https://www.kaggle.com/datasets/saurabhshahane/cyberbullying-dataset?select=youtube_parsed_dataset.csv">Cyberbullying Dataset</a>.</p><p id="35c87c5a-e0a7-435e-bb1a-ba2671646fb2" class="">Авторы: <a href="https://github.com/KarinaZakirova">Karina Zakirova</a>, <a href="https://github.com/VSvir">Vyatcheslav Sviridov</a>, <a href="https://github.com/AcipenserSturio">Maxim Shestakov</a>, <a href="https://github.com/almatuschak">Anastasia Matushchak</a>, <a href="https://github.com/AlekseiBogdan">Alexei Bogdan</a>.</p><p id="3e348fcb-8095-43d1-8abd-5eb335b6ccef" class="">Код проекта на GitHub <a href="https://github.com/AcipenserSturio/iad-project/tree/main">здесь</a>.</p><h1 id="83515044-6df6-42aa-854d-869d8f9be3ba" class="">Download and use</h1><p id="5d941594-2472-481f-8304-eea66e5bc5ba" class="">The program is stored on GitHub <a href="https://github.com/AcipenserSturio/iad-project">here</a>. To download, press the <mark class="highlight-default"><strong>Code</strong></mark> button and click on <strong>Download ZIP</strong>.<strong> </strong>Once downloaded, unzip the archive.</p><p id="9ef4aa4a-9570-4b4a-a169-a2e8d37aff18" class="">One can run the streamlit application with <code>run.bat</code> file (on Windows) or using the <code>streamlit run streamlit-app.py</code> command from terminal.</p><h1 id="c75b2d6c-21f3-4b79-b8d1-efa86a3884af" class="">Установка и использование</h1><p id="0b760e12-2afb-4387-bfd1-76fbd54b0395" class="">Программа находится в свободном доступе на сайте GitHub по <a href="https://github.com/AcipenserSturio/iad-project">ссылке</a>. Для скачивания нажмите кнопку <mark class="highlight-default"><strong>Code </strong></mark><mark class="highlight-default">и выберите опцию</mark><mark class="highlight-default"><strong> </strong></mark><strong>Download ZIP</strong>. После скачивания распакуйте архив.</p><p id="a7c6789c-56bf-4623-8c2b-5b76b77155fb" class="">Streamlit-приложение может быть запущено путем открытия файла <code>run.bat</code> (для Windows) или с помощью использования команды <code>streamlit run </code><a href="http://streamlit-app.py"><code>streamlit-app.py</code></a> в командной строке.</p><h1 id="c554989b-850c-4089-be15-3e2af1963b63" class=""><mark class="highlight-gray_background">Statement of Work in Russian (ТЗ ГОСТ-19)</mark></h1><h2 id="fadf1659-58d1-4f68-80e7-96e3c0ba8184" class=""><mark class="highlight-gray_background"><strong>1. Введение;</strong></mark></h2><p id="ceff175a-763c-4aaa-9558-b2b3ae611d78" class=""><mark class="highlight-gray_background">Основная цель программы “АВТОМАТИЧЕСКАЯ ДЕТЕКЦИЯ КИБЕРБУЛЛИНГА В ТЕКСТОВЫХ СООБЩЕНИЯХ” предназначена для автоматизированного определения негативной информации в текстовых сообщениях. Данная программа может применяться для анализа и модерации комментариев и текстовых сообщений на различных сайтах в сети Интернет. Программа также определяет не только наличие негативной информации, но и тип такой информации (например, религиозная, гендерная или расовая дискриминация). Это позволяет бороться с распространением дискриминации и негативных сообщений в публичном пространстве.</mark></p><h2 id="b125f567-9341-4300-8ce8-c39646346a3d" class=""><mark class="highlight-gray_background"><strong>2. Основания для разработки;</strong></mark></h2><p id="3eb96482-13b6-4d24-81c4-8c53d7577be4" class=""><mark class="highlight-gray_background">На основании приказа преподавателя Факультета Гуманитарных Наук НИУ ВШЭ-НН Кислянициной Е.А. от 01.12.2023 “О разработке программного обеспечения для детекции буллинга”. Наименование программы: “АВТОМАТИЧЕСКАЯ ДЕТЕКЦИЯ КИБЕРБУЛЛИНГА В ТЕКСТОВЫХ СООБЩЕНИЯХ” (“AUTOMATIC DETECTION OF CYBERBULLYING IN TEXT MESSAGES”).</mark></p><h2 id="1ca2a937-4433-4b85-913f-a8065467c532" class=""><mark class="highlight-gray_background"><strong>3. Назначение разработки;</strong></mark></h2><p id="47998c81-927c-4940-a543-6cb74009f231" class=""><mark class="highlight-gray_background">Функциональное назначение: программа предоставляет возможность ввода определенного текста для определения наличия в нем негативной информации. Для негативной информации определяется ее тип. Программа основана на модели машинного обучения, что делает распознавание достаточно точным. Кроме того, программа обладает удобным пользовательским интерфейсом.</mark></p><p id="ac0388f7-51a9-4077-aeca-b3796e544b00" class=""><mark class="highlight-gray_background">Эксплуатационное назначение: программа предоставляет пользователям возможность эффективно определять наличие негативной информации в тексте с целью последующего удаления такой информации. Программа может быть встроена на различные сайты для модерации пользовательской активности.</mark></p><h2 id="fd43ebaf-a793-4bfa-a144-2b484c6caae3" class=""><mark class="highlight-gray_background"><strong>4. Требования к программе;</strong></mark></h2><p id="bd904a05-4c3f-4a97-a852-b6665429d529" class=""><mark class="highlight-gray_background">Требования к функциональным характеристикам:</mark></p><ul id="03a92f5f-2bdb-4b87-a981-22d5a61dd268" class="bulleted-list"><li style="list-style-type:disc"><mark class="highlight-gray_background">программа принимает на вход текстовые данные, обрабатывает их с помощью модели машинного обучения и выдает сообщение пользователю о наличии или отсутствии признаков кибербуллинга в тексте.</mark></li></ul><p id="403a84cc-c23a-4e8d-82b2-ce6b5f770021" class=""><mark class="highlight-gray_background">Требования к надежности:</mark></p><ul id="1b6e07f2-c122-4511-9131-08e11745b7d0" class="bulleted-list"><li style="list-style-type:disc"><mark class="highlight-gray_background">программа должна обеспечивать высокий уровень точности работы модели машинного обучения.</mark></li></ul><p id="1adefcd1-1d53-4c30-8f77-aa5aa735fb90" class=""><mark class="highlight-gray_background">Условия эксплуатации:</mark></p><ul id="5c242e1d-fbdd-48d3-be4d-c9689fa53954" class="bulleted-list"><li style="list-style-type:disc"><mark class="highlight-gray_background">конечный продукт может быть внедрен на сервер в виде обученной модели машинного обучения для автоматической детекции оскорбительных сообщений в текстах пользователей. Также продукт может быть использован в виде веб-сервиса, который автоматически определяет наличие и тип кибербуллинга в введенном пользователем тексте при помощи обученной модели машинного обучения.</mark></li></ul><p id="25c78aa2-c371-41eb-9f88-15d1de06e686" class=""><mark class="highlight-gray_background">Требования к составу и параметрам технических средств:</mark></p><ul id="b2b74d57-4434-4db5-90d5-f22e109c0e52" class="bulleted-list"><li style="list-style-type:disc"><mark class="highlight-gray_background">компьютер на Windows, macOS, Linux.</mark></li></ul><p id="8c8fecf4-2ee5-4688-b70c-074a9766747c" class=""><mark class="highlight-gray_background">Требования к информационной и программной совместимости:</mark></p><ul id="8ab4da12-4a70-4af6-8bca-afe24fdf59fc" class="bulleted-list"><li style="list-style-type:disc"><mark class="highlight-gray_background">программа должна быть выполнена на Python версии 3.8+. Для разработки программы должны быть применены следующие python-библиотеки: pandas, scikit-learn, streamlit, другие библиотеки использовать по мере необходимости.</mark></li></ul><p id="e20ac943-e1b5-4b44-8468-8b4b9e13093e" class=""><mark class="highlight-gray_background">Требования к маркировке и упаковке:</mark></p><ul id="e6bf9038-eb03-467a-a471-83de2fe2a306" class="bulleted-list"><li style="list-style-type:disc"><mark class="highlight-gray_background">программное изделие распространяется по сети Internet. Дистрибуция производится через сайт Github. Специальных требований к маркировке не предъявляется..</mark></li></ul><p id="b6045478-978e-473e-b217-603154d051c3" class=""><mark class="highlight-gray_background">Требования к транспортированию и хранению:</mark></p><ul id="5ee8570a-1cdf-4b59-b9b4-1f0cf37b513d" class="bulleted-list"><li style="list-style-type:disc"><mark class="highlight-gray_background">особых требований к транспортировке не предъявляется. Программа хранится в виде архива файлов на сайте GitHub: https://github.com/AcipenserSturio/iad-project</mark></li></ul><h2 id="dbf67947-835b-4263-abd7-3d07caf52d70" class=""><mark class="highlight-gray_background"><strong>5. Требования к программной документации;</strong></mark></h2><ol type="1" id="ee528ef1-1723-4052-8702-1f4b45a91891" class="numbered-list" start="1"><li><mark class="highlight-gray_background">“АВТОМАТИЧЕСКАЯ ДЕТЕКЦИЯ КИБЕРБУЛЛИНГА В ТЕКСТОВЫХ СООБЩЕНИЯХ”. Техническое задание (ГОСТ 19.201-78).</mark></li></ol><h2 id="b3b0e723-aafe-4566-9374-3c0b348ba065" class=""><mark class="highlight-gray_background"><strong>6. Технико-экономические показатели;</strong></mark></h2><p id="40f273f5-056a-4a4b-adbf-df16c0c6ac28" class=""><mark class="highlight-gray_background">В рамках данной работы расчёт экономической эффективности не предусмотрен.</mark></p><p id="d80715d6-51ec-40b8-9204-58b3cd35dc23" class=""><mark class="highlight-gray_background">Использование программы делает выполнение задачи детекции негативной информации более эффективным, точным и быстрым, что позволит бороться с распространением негативной информации в сети Интернет максимально эффективно.</mark></p><h2 id="994eb75d-3042-41da-bcec-936caf4d04e0" class=""><mark class="highlight-gray_background"><strong>7. Стадии и этапы разработки;</strong></mark></h2><p id="356ea7fc-4e31-4d6d-934e-03af95a8e7eb" class=""><mark class="highlight-gray_background">01.12.2023 — составление ТЗ.<br/>05.12.2023 — готова предобученная модель МО и<br/>частично собран датасет.<br/>08.12.2023 — предварительная демонстрация проекта,<br/>собран дополнительный датасет.<br/>14.12.2023 — объединение и доразметка датасетов,<br/>подготовка финальной презентации проекта.<br/>15.12.2023 — финальная презентация проекта.<br/></mark></p><h2 id="4b2b0c75-d6fb-44aa-a7b5-f125d3a266f0" class=""><mark class="highlight-gray_background"><strong>8. Порядок контроля и приемки.</strong></mark></h2><p id="423cb502-e58d-4394-ac0f-97b9d0b32271" class=""><mark class="highlight-gray_background">15.12.2023 — представление финальной версии проекта.</mark></p><h1 id="acbc1e0e-2c92-4eab-8787-fe60f0ef6602" class=""><mark class="highlight-gray_background">Statement of Work in English</mark></h1><p id="e11c0fac-c04a-4d49-9b2b-e393593ce35a" class=""><mark class="highlight-gray_background">The main purpose of the program “AUTOMATIC DETECTION OF CYBERBULLYING IN TEXT MESSAGES” is designed to automatically identify negative information in text messages. This program can be used to analyze and moderate texts on various Internet sites. The program determines not only the presence of negative information, but also the type of such information (for example, religious, gender or racial discrimination), thus providing the possibility to combat the spread of discrimination and negative information in the public space.</mark></p><p id="0f13ecf9-6a30-4cfd-95a4-fff06d46f5d1" class=""><mark class="highlight-gray_background">The program analyses input text and determines the presence of negative information and its type. This piece of software is based on a machine learning model, which makes the recognition quite accurate. In addition, the program has a user-friendly interface.</mark></p><p id="b58dae1f-6664-48b9-975e-1005896870a0" class=""><mark class="highlight-gray_background">The given application provides users with the ability to effectively determine the presence of negative information in texts in order to subsequently delete or analyze such information. The program can be embedded on various websites to moderate user activity.</mark></p><p id="bec9dff2-3661-4ebf-aea0-595111cff0f8" class=""><mark class="highlight-gray_background">Functional characteristics:</mark><div class="indented"><ul id="3718d2c6-ea63-4aad-8bde-4f3c7cabd35f" class="bulleted-list"><li style="list-style-type:disc"><mark class="highlight-gray_background">The program accepts text data as input, processes it using a machine learning model and sends a message to the user about the presence or absence of signs of cyberbullying in the text.</mark></li></ul><p id="63ad0a7c-93a4-4c46-9ef1-d63267a4788d" class=""><mark class="highlight-gray_background">Reliability requirements:</mark></p><ul id="6a8794f2-4dc5-4d84-bc02-233d0e0b5c77" class="bulleted-list"><li style="list-style-type:disc"><mark class="highlight-gray_background">The program must ensure a high level of accuracy of the machine learning model.</mark></li></ul><p id="19000ed2-c65e-4c9d-82b2-65b00d21aaff" class=""><mark class="highlight-gray_background">Operating conditions:</mark></p><ul id="82b2bbf2-6c7c-41ae-afe4-1926899911f6" class="bulleted-list"><li style="list-style-type:disc"><mark class="highlight-gray_background">The final product can be embedded on the server in the form of a trained machine learning model for automatic detection of offensive messages in user texts. The product can also be used as a web service that automatically detects the presence and type of cyberbullying in the text entered by the user using a trained machine learning model.</mark></li></ul><p id="81fedda7-f4a4-41a3-b4ec-fe8705d9156c" class=""><mark class="highlight-gray_background">Software and hardware requirements:</mark></p><ul id="3a2c3b22-5bfc-48ca-b98e-7946933ea32b" class="bulleted-list"><li style="list-style-type:disc"><mark class="highlight-gray_background">a computer running on Windows, macOS, Linux;</mark></li></ul><ul id="7bc8e336-4660-428a-9be0-99d3443fd1a2" class="bulleted-list"><li style="list-style-type:disc"><mark class="highlight-gray_background">Python version 3.8+;</mark></li></ul><ul id="37b7721c-9809-4364-9a4e-627cb38e47c0" class="bulleted-list"><li style="list-style-type:disc"><mark class="highlight-gray_background">pandas, scikit-learn, streamlit, and other Python modules.</mark></li></ul><p id="91c22000-838b-4738-8ff7-d1dc1693b44f" class=""><mark class="highlight-gray_background">Distribution:</mark></p><ul id="187d9019-d6cc-4275-a65b-9c5f54941bc2" class="bulleted-list"><li style="list-style-type:disc"><mark class="highlight-gray_background">The software product is distributed over the Internet. Distribution is done through the Github website. The program is stored as an archive of files on the GitHub website: </mark><mark class="highlight-gray_background"><a href="https://github.com/AcipenserSturio/iad-project">https://github.com/AcipenserSturio/iad-project</a></mark></li></ul><p id="78ea8e43-5e38-405d-a502-93d0be14cb8d" class="">License:</p><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="e53210c4-a073-46b5-ae3f-00920d9f351d" class="code code-wrap"><code class="language-Plain Text">MIT License
+
+Copyright (c) 2023 Acipenser Sturio
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the &quot;Software&quot;), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED &quot;AS IS&quot;, WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.</code></pre></div></p><h1 id="1358cb70-6d67-4c8d-b13e-cb65d56c0b46" class="">ML-model fitting</h1><p id="c7ef5406-29fd-4aa1-8e79-4805b7511869" class="">In order to create a good dataset with enough information we united two datasets in a separate Jupiter Notebook. The resulting dataset had 52538 rows.</p><p id="b16ec78c-65b7-4bbc-8713-338f582b9a09" class="">Prior to model fitting, the dataset had to be cleared from duplicates and insignificant messages. We noticed the presence of several abnormally large texts. Judging by the lack of contextual connection between its parts, these texts were mistakenly added to the dataset. As a result, we decided to remove such texts from the dataset. To delete large texts, we relied on the pattern rather than the length of the messages, since it is influenced by links added to the message, emoticons, etc., which increase the actual length of the message in characters. We found that the erroneous texts contain a combination of \r\n characters and deleted all texts containing this combination of characters.</p><p id="6ee93e88-27c5-426b-b736-88964a03ce33" class="">Model was split with the use of sklearn.model_selection module and vectorized with TF-IDF vectorizer from sklearn.feature_extraction.text. We tried several classifiers, such as KNN classifier, logistic regression, SVC and LSVC, multinomial naive Bayes, decision tree and Random Forest. Logistic regression model was proved to be the best one. Finetuned model was saved using the pickle module.</p><p id="54e627d9-597b-4549-8b98-08d748b4cffa" class="">Texts were also vectorized with CountVectorizer. The aforementioned classifiers were used as well. LSVC performed better than other models, therefore it was finetuned and saved to a .pkl file. The final average accuracy of the model was 83%.</p><h1 id="ead1494d-cfbd-4829-853f-13ddd3ffc2ce" class="">Обучение модели</h1><p id="8acf9a0d-f588-47a4-acdf-d78d924ce29c" class="">Для того, чтобы создать действительно качественную модель, мы решили увеличить количество данных и объединить два датасета в один в отдельном Jupiter Notebookю В результате получился датасет с 52538 строками.</p><p id="c06f76b9-12bc-4176-9347-663a6bf86fc3" class="">Перед обучением модели набор данных пришлось очистить от дубликатов и незначительных сообщений. Мы заметили наличие нескольких аномально больших текстов. Судя по отсутствию контекстной связи между его частями, эти тексты были ошибочно добавлены в набор данных. В результате мы решили удалить такие тексты. Чтобы удалить большие тексты, мы полагались на шаблон, а не на длину сообщений, поскольку на длину влияют ссылки, добавленные в сообщение, эмотиконы и т.д., которые увеличивают фактическую длину сообщения в символах. Мы обнаружили, что ошибочные тексты имеют комбинацию символов \r\n, и удалили все тексты, содержащие эту комбинацию символов.</p><p id="cd3c2bb0-c459-4365-bdde-540a90aa41d3" class="">Модель была разделена с использованием модуля sklearn.model_selection и векторизована с помощью TF-IDF из sklearn.feature_extraction.text. Мы опробовали несколько классификаторов, таких как KNN classifier, логистическая регрессия, SVC и LSVC, мультиномиальный наивный Байес, Decision Tree и Random Forest. Модель логистической регрессии оказалась лучшей. Доработанная модель была сохранена с помощью модуля pickle.</p><p id="49546db7-c74c-4f2e-8f8a-4df12285c1d6" class="">Тексты также были векторизованы с помощью CountVectorizer. Также использовались вышеупомянутые классификаторы. LSVC работала лучше, чем другие модели, поэтому она был доработана и сохранена в файл .pkl. Итоговая средняя точность модели составила 83%.</p><h1 id="b210312c-9152-4312-9a9d-68c488c150d6" class="">Project files</h1><h2 id="caff91aa-ee22-42e0-8dd9-8be9338bc76a" class="">data</h2><p id="4620869a-4426-4504-bf71-6dc365cf892e" class="">This folder contains trained models in .pkl files and the initially used dataframe:</p><ul id="25567d04-f428-4327-91c7-8a098c9a4a18" class="bulleted-list"><li style="list-style-type:disc">cvec_lsvc_finetuned_new.pkl contains the SVC model.</li></ul><ul id="ddd205b5-87ef-4253-aeff-6a5f6a2e00f1" class="bulleted-list"><li style="list-style-type:disc">decoder.pkl contains the label decoder.</li></ul><ul id="dda6bd14-94be-49a0-8098-4ea6ee7627a1" class="bulleted-list"><li style="list-style-type:disc">tf_idf_logreg_finetuned_new.pkl contains the logistic regression model.</li></ul><ul id="d15a7150-c13b-415e-82c4-912c329aa4cd" class="bulleted-list"><li style="list-style-type:disc">cyberbullying_tweets.csv contains the dataframe. </li></ul><p id="1f4ce0a2-4dc8-47dd-aa51-2e644b84ee2e" class="">Папка содержит уже обученные модели в файлах формата .pkl, а также изначально использованный датасет:</p><ul id="ac669fe2-0fff-468e-9254-f7503d0d8910" class="bulleted-list"><li style="list-style-type:disc">cvec_lsvc_finetuned_new.pkl содержит SVC-модель.</li></ul><ul id="ced3c62e-585a-4252-b2e9-ef9b57656178" class="bulleted-list"><li style="list-style-type:disc">decoder.pkl содержит декодер лейблов.</li></ul><ul id="25ca3492-fe74-440c-9172-976ec35864c4" class="bulleted-list"><li style="list-style-type:disc">tf_idf_logreg_finetuned_new.pkl содержит модель логистической регрессии.</li></ul><ul id="03170bc5-020a-430b-a1d1-bbf89b889a1a" class="bulleted-list"><li style="list-style-type:disc">cyberbullying_tweets.csv содержит датасет. </li></ul><h2 id="c824371c-ebb5-455d-aafb-83ac8197dfd3" class="">pages</h2><ul id="68bd52cf-52cb-4e9e-9e13-8a2f5e22f9d7" class="bulleted-list"><li style="list-style-type:disc">diagrams.py contains basic EDA and dataframe statistics with plots.</li></ul><ul id="fa65e1bc-9adb-4598-a210-17ff3e1c56c3" class="bulleted-list"><li style="list-style-type:disc">diagrams.py содержит EDA главную статистику по датасету с графиками.</li></ul><h2 id="8781f171-b7c0-4265-b6fc-556e92a31a0d" class="">.gitignore</h2><ul id="900977ff-59ae-417a-88b8-6ae45d0367ca" class="bulleted-list"><li style="list-style-type:disc">.gitignore file specifies intentionally untracked files that Git should ignore.</li></ul><ul id="1689ca91-f8bd-4fd6-8ce8-bb8fcf50c0f7" class="bulleted-list"><li style="list-style-type:disc">.gitignore игнорируемые Git файлы.</li></ul><h2 id="a88762bb-8930-4d54-8bb1-b6dbb8da9d4b" class="">LICENSE</h2><p id="1700aa8c-0020-4834-8662-20367aff9b01" class="">MIT Licence file.</p><p id="c0796e91-1795-4030-a32c-8e50f177d213" class="">Файл с лицензией MIT.</p><h2 id="952827c7-c126-4009-98a8-8642f10ea967" class="">Presentation.pdf</h2><p id="0ab04bfc-085d-460d-b4c2-00174724715a" class="">Contains project presentation in Russian language.</p><p id="6aa4a544-a0a2-45d3-b1b1-171a3b0ed4ca" class="">Презентация проекта на русском языке.</p><h2 id="b78e23b2-34d8-4b85-88f7-19af6bbc5ca7" class="">README.md</h2><p id="5b5afcf3-9168-42b0-87c9-05f2027c4b41" class="">README file with project description.</p><p id="22a92e9e-2f5b-41c6-a013-fe10790df904" class="">README файл с кратким описанием проекта.</p><h2 id="6bd2c9a2-1b2b-4d8b-b366-e7408a01404f" class="">Datasets_concatenation.ipynb</h2><p id="45017760-6ea3-4fb0-9332-339d156e4615" class="">Jupiter Notebook file with dataset concatenation.</p><p id="b480e660-d7db-4818-8ba8-7a0e2a617a43" class="">Jupiter Notebook для объединения датасетов.</p><h2 id="9359e416-1857-45f8-bf85-b081abbea6d7" class="">Cyberbullying_detection_models.ipynb</h2><p id="12124ad8-08be-4bce-9f5d-1ab8d4a90476" class="">Jupiter Notebook file with model fitting pipeline. EDA, text preprocessing, text vectorization and model fitting and finetuning.</p><p id="8233dada-953b-4fe6-bf03-cbb0d21ef416" class="">Jupiter Notebook с описанием всего процесса тренировки модели. Содержит EDA, обработку и  векторизацию текста, обучение и подбор параметров модели. </p><h2 id="6369b439-8c21-4008-bbfd-1cad563f08a3" class="">requirements.txt</h2><p id="023ebefd-d5c8-46ac-bef5-074d73864b57" class="">A list of Python modules required to run the program.</p><p id="63248f10-fe11-46ff-8a6a-b4e3474b4c24" class="">Список необходимых для работы программы модулей.</p><h2 id="6a4a3ca2-b732-4a3c-9fcf-5e9aa9153977" class="">run.bat</h2><p id="7ce956c2-41c8-4a0d-bdb7-125bf06046c3" class="">File to run the streamlit application on Windows.</p><p id="a1bf07a0-8fa4-4d58-a586-2cf82c5d2cf8" class="">Файл для запуска streamlit-приложения на Windows.</p><h2 id="52c2ad45-8f84-4860-8054-2e04caaa9092" class="">streamlit-app.py</h2><p id="931d8eb0-a068-42ef-9c93-20615befc6aa" class="">Contains the streamlit application that runs the program.</p><p id="a59360ec-8b55-4162-807b-fa6ec5a82c79" class="">Содержит streamlit-приложение, запускающее программу.</p></div></article><span class="sans" style="font-size:14px;padding-top:2em"></span></body></html>
