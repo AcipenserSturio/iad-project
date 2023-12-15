@@ -1,6 +1,6 @@
 streamlit==1.23.1
 matplotlib
 emoji
-scikit-learn
+scikit-learn==1.2.2
 wordcloud
 nltk
