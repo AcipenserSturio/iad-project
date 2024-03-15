@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="{{ url_for('assets', path='reset.css') }}">
+    <link rel="stylesheet" href="{{ url_for('assets', path='styles.css') }}">
+    <script type="text/javascript" src="{{ url_for('assets', path='main.js') }}"></script>
+    <title>Cybector</title>
+</head>
+<body>
+    <nav>
+        <div class="navWrapper">
+            <span>LAB №4</span>
+            <div>
+                <a href="https://colab.research.google.com/drive/1TK7PPm4aSnddBpGva_BypHCfMUvjXuY2#scrollTo=XxaNrytX3qnf" target="_blank">Colab</a>
+                <a href="https://github.com/AcipenserSturio/iad-project" target="_blank">GitHub</a>
+            </div>
+        </div>
+    </nav>
+    <div class="formWrapper">
+        <form>
+          <span class="header">CHECK YOUR SAMPLE</span>
+            <div class="text">
+                <label for="text">YOUR CYBERBULLYING</label>
+                <input id="text" type="text" placeholder="Type here...">
+            </div>
+          <button id="button" type="button">CHECK</button>
+          <div class="results">
+            <span class="header">TOPIC</span>
+            <div>
+              <span id="result"></span>
+            </div>
+          </div>
+        </form>
+    </div>
+</body>
+</html>
